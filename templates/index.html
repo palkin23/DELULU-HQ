@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fff4fa">
+  <title>DELULU HQ — Your Main Character Era</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body data-moods='{{ moods|tojson }}'>
+<div class="sparkle-field" aria-hidden="true">✧　·　✦　˚　✧　·　⋆　✦　·　˚　✧</div>
+<div class="app-shell">
+  <aside class="sidebar">
+    <a class="brand" href="#home"><span class="brand-bow">୨୧</span><span>DELULU <i>HQ</i><small>MAIN CHARACTER OS</small></span></a>
+    <div class="side-label">YOUR LITTLE UNIVERSE</div>
+    <nav class="nav-list" aria-label="Main navigation">
+      <a class="nav-link active" href="#home"><span>⌂</span> The HQ</a>
+      <a class="nav-link" href="#detective"><span>♡</span> Delulu Detective</a>
+      <a class="nav-link" href="#movie"><span>✧</span> Mood-to-Movie</a>
+      <a class="nav-link" href="#glowup"><span>☆</span> Glow-Up Lab</a>
+      <a class="nav-link" href="#diary"><span>☾</span> 3 AM Confessional</a>
+    </nav>
+    <div class="sidebar-spacer"></div>
+    <div class="sidebar-note">
+      <span class="tiny-heart">♡</span>
+      <p>For the girl becoming<br>her own favorite person.</p>
+      <span class="note-sparkle">✦ ✧</span>
+    </div>
+    <div class="side-footer">MADE OF DAYDREAMS & GOOD INTENTIONS</div>
+  </aside>
+
+  <main id="home" class="main-content">
+    <header class="topbar">
+      <div class="breadcrumb">YOUR SPACE <span>✧</span> <b>THE HQ</b></div>
+      <div class="top-right">
+        <span class="date-pill">{{ today_mood and '♡ MOOD SAVED' or '♡ YOUR DAY, YOUR WAY' }}</span>
+        <div class="avatar">D</div>
+      </div>
+    </header>
+
+    <section class="welcome-row">
+      <div>
+        <div class="eyebrow">TUESDAY, YOUR NEXT CHAPTER <span>✦</span></div>
+        <h1>Welcome to your<br><em>main character era.</em></h1>
+        <p class="welcome-copy">A little space to dream big, feel everything, and be kind to yourself.</p>
+      </div>
+      <div class="welcome-sticker">
+        <span>✦</span>
+        <strong>YOU<br>ARE THE<br>PLOT</strong>
+        <span>♡</span>
+      </div>
+    </section>
+
+    <section class="quote-strip">
+      <div class="quote-mark">“</div>
+      <div>
+        <div class="eyebrow">A NOTE FROM THE UNIVERSE</div>
+        <p>{{ quote }}</p>
+      </div>
+      <span class="quote-star">✧</span>
+    </section>
+
+    <section class="section-head">
+      <div>
+        <div class="eyebrow">A CHECK-IN, NOT A CHECKLIST</div>
+        <h2>How are we <em>feeling?</em></h2>
+      </div>
+      <span class="micro-note">Every feeling gets a seat at the table.</span>
+    </section>
+
+    <section class="mood-card">
+      <div class="mood-prompt">
+        <span class="mood-sun">☼</span>
+        <div>
+          <b>Take a tiny pause</b>
+          <small>Pick the vibe that feels most like you today.</small>
+        </div>
+      </div>
+      <div class="mood-options" id="mood-options">
+        {% for mood in moods %}
+        <button type="button" class="mood-chip {{ 'selected' if today_mood == mood else '' }}" data-mood="{{ mood }}">
+          {{ {'Dreamy':'☁','Unbothered':'😌','Romantic':'♡','Chaotic':'⚡','Soft':'🌷','Powerful':'✦','Melancholy':'☾'}[mood] }}
+          <span>{{ mood }}</span>
+        </button>
+        {% endfor %}
+      </div>
+      <div class="mood-saved" id="mood-saved">
+        {% if today_mood %}Today’s mood is {{ today_mood }}. Proud of you for checking in. ♡{% endif %}
+      </div>
+    </section>
+
+    <section class="section-head widget-head">
+      <div>
+        <div class="eyebrow">YOUR DASHBOARD, YOUR RULES</div>
+        <h2>The little <em>things.</em></h2>
+      </div>
+      <span class="micro-note">Consider this your soft launch.</span>
+    </section>
+
+    <div class="widget-grid">
+      <article class="widget detective-card" id="detective">
+        <div class="card-top">
+          <span class="icon-bubble">⌕</span>
+          <span class="card-index">01 / READ THE ROOM</span>
+        </div>
+        <h3>Delulu<br><em>Detective</em></h3>
+        <p>Bring us the evidence. We’ll bring three possible plotlines, with your peace of mind intact.</p>
+        <button class="text-button" data-open="detective-modal">Investigate a situation <span>↗</span></button>
+        <div class="decor-heart">♡</div>
+      </article>
+
+      <article class="widget movie-card" id="movie">
+        <div class="card-top">
+          <span class="icon-bubble">▣</span>
+          <span class="card-index">02 / SET THE SCENE</span>
+        </div>
+        <h3>Mood-to-<br><em>Movie</em></h3>
+        <p>Your current vibe, reimagined as an oddly specific cinematic masterpiece.</p>
+        <button class="text-button" data-open="movie-modal">Get your movie <span>↗</span></button>
+        <div class="movie-reel">✧</div>
+      </article>
+
+      <article class="widget glow-card" id="glowup">
+        <div class="card-top">
+          <span class="icon-bubble">✦</span>
+          <span class="card-index">03 / LITTLE BY LITTLE</span>
+        </div>
+        <h3>Glow-Up <em>Lab</em></h3>
+        <p>Build rituals that feel like care, not homework.</p>
+        <div class="glow-stats">
+          <div>
+            <strong>{{ completed }}<small>/ {{ habits|length }}</small></strong>
+            <span>today’s rituals</span>
+          </div>
+          <div>
+            <strong>{{ streak }} <small>days</small></strong>
+            <span>your streak</span>
+          </div>
+          <div class="pet" title="Your tiny companion">{{ pet }}</div>
+        </div>
+        <button class="text-button" data-open="habit-modal">Tend to your habits <span>↗</span></button>
+      </article>
+
+      <article class="widget diary-card" id="diary">
+        <div class="card-top">
+          <span class="icon-bubble">☾</span>
+          <span class="card-index">04 / NO ONE’S WATCHING</span>
+        </div>
+        <h3>3 AM<br><em>Confessional</em></h3>
+        <p>A velvet-rope-free place for the thoughts that arrive after midnight.</p>
+        <button class="text-button" data-open="diary-modal">Open a fresh page <span>↗</span></button>
+        <div class="diary-flower">❀</div>
+      </article>
+    </div>
+
+    <section class="lower-grid">
+      <article class="panel habits-panel">
+        <div class="panel-heading">
+          <div>
+            <div class="eyebrow">YOUR GENTLE ROUTINE</div>
+            <h2>Today's <em>rituals</em></h2>
+          </div>
+          <button class="round-plus" data-open="habit-modal" aria-label="Add a habit">+</button>
+        </div>
+
+        <div class="habit-list">
+          {% for habit in habits %}
+          <label class="habit-row">
+            <input class="habit-toggle" type="checkbox" data-id="{{ habit.id }}" {{ 'checked' if habit.done else '' }}>
+            <span class="custom-check">♡</span>
+            <span>{{ habit.name }}</span>
+            <span class="habit-done">{{ 'DONE!' if habit.done else 'A LITTLE AT A TIME' }}</span>
+          </label>
+          {% else %}
+          <p class="empty">Your ritual list is waiting for its first little thing.</p>
+          {% endfor %}
+        </div>
+
+        <div class="habit-foot">
+          <span>{{ completed }} of {{ habits|length }} rituals complete</span>
+          <span>✧ SMALL STEPS COUNT ✧</span>
+        </div>
+      </article>
+
+      <article class="panel progress-panel">
+        <div class="panel-heading">
+          <div>
+            <div class="eyebrow">A WEEK OF SHOWING UP</div>
+            <h2>Little wins <em>add up.</em></h2>
+          </div>
+          <span class="chart-sparkle">✧</span>
+        </div>
+
+        <div class="chart-wrap">
+          <div class="chart-y">
+            <span>4</span><span>3</span><span>2</span><span>1</span><span>0</span>
+          </div>
+          <div class="chart-bars">
+            {% for day in chart %}
+            <div class="bar-column">
+              <div class="bar-track">
+                <div class="bar" data-count="{{ day.count }}" data-total="{{ habits|length }}" title="{{ day.count }} rituals"></div>
+              </div>
+              <small>{{ day.day }}</small>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="chart-caption">
+          <span><i></i> rituals completed</span>
+          <span>LAST 7 DAYS</span>
+        </div>
+      </article>
+    </section>
+
+    <section class="panel recent-panel">
+      <div class="panel-heading">
+        <div>
+          <div class="eyebrow">A LITTLE TIME CAPSULE</div>
+          <h2>Recent <em>pages</em></h2>
+        </div>
+        <button class="soft-button" data-open="diary-modal">+ New entry</button>
+      </div>
+
+      <div class="entry-grid" id="entry-grid">
+        {% for entry in entries %}
+        <article class="entry-card" data-entry="{{ entry.id }}">
+          <span class="entry-mood">{{ entry.mood }} · {{ entry.updated_at[:10] }}</span>
+          <h3>{{ entry.title }}</h3>
+          <p>{{ entry.body[:110] }}{% if entry.body|length > 110 %}…{% endif %}</p>
+          <div class="entry-actions">
+            <button data-edit="{{ entry.id }}">Edit</button>
+            <button data-delete="{{ entry.id }}">Delete</button>
+          </div>
+        </article>
+        {% else %}
+        <p class="empty">Your first page is yours to write. No rush, no audience. ♡</p>
+        {% endfor %}
+      </div>
+    </section>
+
+    <footer class="page-footer">
+      <span>୨୧ DELULU HQ · A SOFT PLACE TO LAND</span>
+      <span>YOUR STORY IS STILL BEING WRITTEN <b>♡</b></span>
+    </footer>
+  </main>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="modal-backdrop" id="modal-backdrop">
+  <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button class="modal-close" aria-label="Close">×</button>
+    <div class="eyebrow" id="modal-kicker">A LITTLE MOMENT FOR YOU</div>
+    <h2 id="modal-title">A title</h2>
+    <div id="modal-body"></div>
+  </section>
+</div>
+
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
