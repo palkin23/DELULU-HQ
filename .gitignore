@@ -1,5 +1,16 @@
+# Python
 __pycache__/
 *.py[cod]
-*.db
 .venv/
+venv/
+
+# Environment secrets
 .env
+
+# Local database and private data
+*.db
+
+# Editor and operating system
+.vscode/
+.DS_Store
+Thumbs.db
